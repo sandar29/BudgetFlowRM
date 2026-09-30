@@ -363,65 +363,7 @@ function saveSettings() {
    ========================================================= */
 
 function createDemoTransactions() {
-
-    const today = new Date();
-
-    const currentMonth =
-        today.getMonth();
-
-    const currentYear =
-        today.getFullYear();
-
-    return [
-
-        {
-            id: cryptoId(),
-            type: "income",
-            amount: 8500000,
-            category: "salary",
-            note: "Gaji",
-            date: formatDateForInput(
-                new Date(
-                    currentYear,
-                    currentMonth,
-                    Math.max(1, today.getDate() - 1)
-                )
-            ),
-            createdAt: Date.now() - 5000
-        },
-
-        {
-            id: cryptoId(),
-            type: "expense",
-            amount: 45000,
-            category: "food",
-            note: "Makan siang",
-            date: formatDateForInput(today),
-            createdAt: Date.now() - 4000
-        },
-
-        {
-            id: cryptoId(),
-            type: "expense",
-            amount: 28000,
-            category: "transport",
-            note: "Transportasi",
-            date: formatDateForInput(today),
-            createdAt: Date.now() - 3000
-        },
-
-        {
-            id: cryptoId(),
-            type: "expense",
-            amount: 75000,
-            category: "food",
-            note: "Makan malam",
-            date: formatDateForInput(today),
-            createdAt: Date.now() - 2000
-        }
-
-    ];
-
+    return [];
 }
 
 /* =========================================================
