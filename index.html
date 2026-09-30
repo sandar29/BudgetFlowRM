@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <meta name="theme-color" content="#0f766e">
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-title" content="BudgetFlow">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%230f766e'/%3E%3Crect x='16' y='34' width='8' height='14' rx='4' fill='%23fff' opacity='.6'/%3E%3Crect x='28' y='26' width='8' height='22' rx='4' fill='%23fff' opacity='.8'/%3E%3Crect x='40' y='16' width='8' height='32' rx='4' fill='%23fff'/%3E%3C/svg%3E">
+
+    <title>BudgetFlow — Personal Finance</title>
+
+    <meta
+        name="description"
+        content="BudgetFlow — monitor pemasukan, pengeluaran, dan kondisi finansial pribadi dengan sederhana."
+    >
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400..800&family=Manrope:wght@500..800&display=swap"
+        rel="stylesheet"
+    >
+
+    <script src="https://unpkg.com/lucide@1.48.0/dist/umd/lucide.min.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- =====================================================
+         APP HEADER
+    ====================================================== -->
+    <header class="app-header">
+
+        <div class="brand">
+            <div class="brand-mark">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <div>
+                <div class="brand-name">BudgetFlow</div>
+                <div class="brand-caption">Personal Finance</div>
+            </div>
+        </div>
+
+        <div class="header-actions">
+
+            <button
+                class="icon-button"
+                id="settingsButton"
+                aria-label="Pengaturan"
+            >
+                <i data-lucide="settings"></i>
+            </button>
+
+            <button
+                class="icon-button"
+                id="notificationButton"
+                aria-label="Notifikasi"
+            >
+                <i data-lucide="bell"></i>
+                <span class="notification-dot" id="notificationDot" hidden></span>
+            </button>
+
+        </div>
+
+    </header>
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+    <main class="main-content">
+
+        <!-- =================================================
+             HOME
+        ================================================== -->
+        <section
+            class="page active"
+            id="homePage"
+            data-page="home"
+        >
+
+            <div class="greeting">
+                <div>
+                    <span class="eyebrow">OVERVIEW</span>
+                    <h1>Halo, <span id="userName">Almira</span></h1>
+                    <p>Bagaimana kondisi keuanganmu hari ini?</p>
+                </div>
+
+                <div class="date-badge" id="currentDate">
+                    29 Sep 2026
+                </div>
+            </div>
+
+            <!-- INSTALL CARD -->
+            <article class="install-card" id="installCard" data-install-wrap hidden>
+
+                <div class="install-icon">
+                    <i data-lucide="download"></i>
+                </div>
+
+                <div class="install-text">
+                    <strong>Pakai sebagai aplikasi</strong>
+                    <span>Instal agar bisa dibuka offline dari layar utama.</span>
+                </div>
+
+                <button class="install-action" type="button" data-install>Instal</button>
+
+                <button class="install-close" id="installDismiss" type="button" aria-label="Sembunyikan">
+                    <i data-lucide="x"></i>
+                </button>
+
+            </article>
+
+            <!-- BALANCE CARD -->
+            <article class="balance-card">
+
+                <div class="balance-top">
+
+                    <div>
+                        <span class="balance-label">Total Saldo</span>
+
+                        <div class="balance-value-row">
+                            <h2 id="balanceValue">Rp 0</h2>
+
+                            <button
+                                class="balance-toggle"
+                                id="toggleBalance"
+                                aria-label="Tampilkan/sembunyikan saldo"
+                            >
+                                <i data-lucide="eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="balance-status">
+                        <span class="status-indicator"></span>
+                        <span>Aktif</span>
+                    </div>
+
+                </div>
+
+                <div class="balance-divider"></div>
+
+                <div class="balance-summary">
+
+                    <div class="summary-item">
+                        <div class="summary-icon income">
+                            <i data-lucide="arrow-down-left"></i>
+                        </div>
+
+                        <div>
+                            <span>Pemasukan</span>
+                            <strong id="monthlyIncome">Rp 0</strong>
+                        </div>
+                    </div>
+
+                    <div class="summary-item">
+                        <div class="summary-icon expense">
+                            <i data-lucide="arrow-up-right"></i>
+                        </div>
+
+                        <div>
+                            <span>Pengeluaran</span>
+                            <strong id="monthlyExpense">Rp 0</strong>
+                        </div>
+                    </div>
+
+                </div>
+
+            </article>
+
+            <!-- CASH FLOW -->
+            <section class="section-block">
+
+                <div class="section-heading">
+
+                    <div>
+                        <span class="eyebrow">CASH FLOW</span>
+                        <h2>Uang keluar bulan ini</h2>
+                    </div>
+
+                    <button
+                        class="text-button"
+                        data-page="analysis"
+                    >
+                        Lihat analisis
+                        <i data-lucide="arrow-up-right"></i>
+                    </button>
+
+                </div>
+
+                <article class="chart-card">
+
+                    <div class="chart-header">
+
+                        <div>
+                            <span class="chart-label">Pengeluaran</span>
+                            <strong id="spendingTotal">Rp 0</strong>
+                        </div>
+
+                        <div
+                            class="change-badge"
+                            id="spendingChange"
+                        >
+                            0%
+                        </div>
+
+                    </div>
+
+                    <div class="chart-wrapper">
+
+                        <svg
+                            class="spending-chart"
+                            viewBox="0 0 600 220"
+                            preserveAspectRatio="none"
+                        >
+
+                            <defs>
+                                <linearGradient
+                                    id="chartGradient"
+                                    x1="0"
+                                    y1="0"
+                                    x2="0"
+                                    y2="1"
+                                >
+                                    <stop
+                                        offset="0%"
+                                        stop-opacity="0.28"
+                                    />
+
+                                    <stop
+                                        offset="100%"
+                                        stop-opacity="0"
+                                    />
+                                </linearGradient>
+                            </defs>
+
+                            <path
+                                id="chartArea"
+                                d=""
+                            ></path>
+
+                            <path
+                                id="chartLine"
+                                d=""
+                            ></path>
+
+                        </svg>
+
+                        <div class="chart-labels">
+                            <span>Awal bulan</span>
+                            <span>Sekarang</span>
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </section>
+
+            <!-- SPENDING CATEGORIES -->
+            <section class="section-block">
+
+                <div class="section-heading">
+
+                    <div>
+                        <span class="eyebrow">SPENDING</span>
+                        <h2>Pengeluaranmu</h2>
+                    </div>
+
+                    <button
+                        class="icon-button small"
+                        data-page="analysis"
+                        aria-label="Lihat analisis"
+                    >
+                        <i data-lucide="chevron-right"></i>
+                    </button>
+
+                </div>
+
+                <div
+                    class="category-list"
+                    id="spendingCategories"
+                >
+
+                    <!-- Generated by JS -->
+
+                </div>
+
+            </section>
+
+            <!-- FINANCIAL INSIGHT -->
+            <section class="section-block">
+
+                <article class="insight-card">
+
+                    <div class="insight-icon">
+                        <i data-lucide="sparkles"></i>
+                    </div>
+
+                    <div class="insight-content">
+
+                        <span class="eyebrow">FINANCIAL INSIGHT</span>
+
+                        <h3 id="financialInsightTitle">
+                            Belum ada cukup data
+                        </h3>
+
+                        <p id="financialInsightText">
+                            Tambahkan beberapa transaksi untuk mendapatkan insight mengenai pola keuanganmu.
+                        </p>
+
+                    </div>
+
+                </article>
+
+            </section>
+
+            <!-- ISLAMIC INSIGHT -->
+            <section class="section-block">
+
+                <button type="button"
+                    class="islamic-preview"
+                    data-page="islamic"
+                >
+
+                    <span class="islamic-symbol">
+                        <i data-lucide="moon-star"></i>
+                    </span>
+
+                    <span class="islamic-preview-content">
+
+                        <span class="eyebrow">
+                            ISLAMIC FINANCE
+                        </span>
+
+                        <strong class="islamic-preview-title">Kelola uang dengan lebih sadar</strong>
+
+                        <span class="islamic-preview-text">
+                            Pelajari prinsip sederhana dalam mengatur keuangan,
+                            termasuk sedekah, prioritas kebutuhan, dan menghindari pemborosan.
+                        </span>
+
+                    </span>
+
+                    <i
+                        class="preview-arrow"
+                        data-lucide="arrow-up-right"
+                    ></i>
+
+                </button>
+
+            </section>
+
+            <!-- RECENT TRANSACTIONS -->
+            <section class="section-block">
+
+                <div class="section-heading">
+
+                    <div>
+                        <span class="eyebrow">ACTIVITY</span>
+                        <h2>Transaksi terbaru</h2>
+                    </div>
+
+                    <button
+                        class="text-button"
+                        data-page="transactions"
+                    >
+                        Lihat semua
+                        <i data-lucide="arrow-up-right"></i>
+                    </button>
+
+                </div>
+
+                <div
+                    class="transaction-list"
+                    id="recentTransactions"
+                >
+
+                    <!-- Generated by JS -->
+
+                </div>
+
+            </section>
+
+        </section>
+
+
+        <!-- =================================================
+             TRANSACTIONS
+        ================================================== -->
+        <section
+            class="page"
+            id="transactionsPage"
+            data-page="transactions"
+        >
+
+            <div class="page-heading">
+
+                <div>
+                    <span class="eyebrow">ACTIVITY</span>
+                    <h1>Transaksi</h1>
+                    <p>Semua pergerakan uangmu.</p>
+                </div>
+
+                <button
+                    class="icon-button"
+                    id="transactionSearchButton"
+                    aria-label="Cari transaksi"
+                >
+                    <i data-lucide="search"></i>
+                </button>
+
+            </div>
+
+            <div class="filter-scroll">
+
+                <button
+                    class="filter-chip active"
+                    data-filter="all"
+                >
+                    Semua
+                </button>
+
+                <button
+                    class="filter-chip"
+                    data-filter="income"
+                >
+                    Pemasukan
+                </button>
+
+                <button
+                    class="filter-chip"
+                    data-filter="expense"
+                >
+                    Pengeluaran
+                </button>
+
+            </div>
+
+            <div class="search-bar" id="searchBar" hidden>
+                <i data-lucide="search"></i>
+                <input
+                    type="search"
+                    id="transactionSearchInput"
+                    placeholder="Cari catatan, kategori, tanggal"
+                    aria-label="Cari transaksi"
+                    autocomplete="off"
+                >
+            </div>
+
+            <div
+                class="transaction-list full"
+                id="fullTransactionList"
+            >
+
+                <!-- Generated by JS -->
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             ANALYSIS
+        ================================================== -->
+        <section
+            class="page"
+            id="analysisPage"
+            data-page="analysis"
+        >
+
+            <div class="page-heading">
+
+                <div>
+                    <span class="eyebrow">FINANCIAL ANALYSIS</span>
+                    <h1>Analisis</h1>
+                    <p>Kenali pola keuanganmu.</p>
+                </div>
+
+            </div>
+
+            <!-- PERIOD -->
+            <div class="period-selector">
+
+                <button
+                    class="period-button active"
+                    data-period="month"
+                >
+                    Bulan ini
+                </button>
+
+                <button
+                    class="period-button"
+                    data-period="last-month"
+                >
+                    Bulan lalu
+                </button>
+
+            </div>
+
+            <!-- CASH FLOW SUMMARY -->
+            <article class="analysis-summary-card">
+
+                <div class="analysis-summary-header">
+
+                    <div>
+                        <span class="eyebrow">CASH FLOW</span>
+                        <h2 id="analysisNet">Rp 0</h2>
+                    </div>
+
+                    <div
+                        class="net-status positive"
+                        id="analysisNetStatus"
+                    >
+                        Positif
+                    </div>
+
+                </div>
+
+                <div class="analysis-metrics">
+
+                    <div class="analysis-metric">
+                        <span>Pemasukan</span>
+                        <strong id="analysisIncome">Rp 0</strong>
+                    </div>
+
+                    <div class="analysis-metric">
+                        <span>Pengeluaran</span>
+                        <strong id="analysisExpense">Rp 0</strong>
+                    </div>
+
+                </div>
+
+            </article>
+
+            <!-- CATEGORY ANALYSIS -->
+            <section class="section-block">
+
+                <div class="section-heading">
+
+                    <div>
+                        <span class="eyebrow">BREAKDOWN</span>
+                        <h2>Ke mana uangmu pergi?</h2>
+                    </div>
+
+                </div>
+
+                <article class="analysis-card">
+
+                    <div
+                        class="donut-chart"
+                        id="donutChart"
+                    >
+                        <div class="donut-center">
+                            <strong id="donutTotal">Rp 0</strong>
+                            <span>Total</span>
+                        </div>
+                    </div>
+
+                    <div
+                        class="legend-list"
+                        id="categoryLegend"
+                    >
+
+                        <!-- Generated by JS -->
+
+                    </div>
+
+                </article>
+
+            </section>
+
+            <!-- MONTHLY COMPARISON -->
+            <section class="section-block">
+
+                <div class="section-heading">
+
+                    <div>
+                        <span class="eyebrow">COMPARISON</span>
+                        <h2>Perbandingan bulan</h2>
+                    </div>
+
+                </div>
+
+                <article class="comparison-card">
+
+                    <div class="comparison-row">
+
+                        <div>
+                            <span>Bulan lalu</span>
+                            <strong id="lastMonthExpense">
+                                Rp 0
+                            </strong>
+                        </div>
+
+                        <div class="comparison-arrow">
+                            <i data-lucide="arrow-right"></i>
+                        </div>
+
+                        <div>
+                            <span>Bulan ini</span>
+                            <strong id="currentMonthExpense">
+                                Rp 0
+                            </strong>
+                        </div>
+
+                    </div>
+
+                    <div class="comparison-result">
+                        <span id="comparisonText">
+                            Belum ada data perbandingan.
+                        </span>
+                    </div>
+
+                </article>
+
+            </section>
+
+            <!-- SAVING RATE -->
+            <section class="section-block">
+
+                <div class="section-heading">
+
+                    <div>
+                        <span class="eyebrow">SAVING RATE</span>
+                        <h2>Sisa dari pemasukan</h2>
+                    </div>
+
+                </div>
+
+                <article class="saving-card">
+
+                    <div class="saving-header">
+
+                        <div>
+                            <span>Rasio sisa pemasukan</span>
+                            <strong id="savingRate">0%</strong>
+                        </div>
+
+                    </div>
+
+                    <div class="progress-track">
+                        <div
+                            class="progress-value"
+                            id="savingProgress"
+                        ></div>
+                    </div>
+
+                    <p id="savingDescription">
+                        Tambahkan transaksi untuk melihat saving rate.
+                    </p>
+
+                    <p class="saving-note">
+                        Investasi dihitung sebagai uang yang disimpan, bukan pengeluaran konsumsi.
+                    </p>
+
+                </article>
+
+            </section>
+
+            <!-- SMART INSIGHT -->
+            <section class="section-block">
+
+                <article class="smart-analysis">
+
+                    <div class="smart-analysis-icon">
+                        <i data-lucide="brain"></i>
+                    </div>
+
+                    <div>
+
+                        <span class="eyebrow">
+                            BUDGETFLOW INSIGHT
+                        </span>
+
+                        <h3 id="analysisInsightTitle">
+                            Insight akan muncul di sini
+                        </h3>
+
+                        <p id="analysisInsightText">
+                            BudgetFlow akan membaca pola transaksi yang kamu catat.
+                        </p>
+
+                    </div>
+
+                </article>
+
+            </section>
+
+        </section>
+
+
+        <!-- =================================================
+             ISLAMIC FINANCE
+        ================================================== -->
+        <section
+            class="page"
+            id="islamicPage"
+            data-page="islamic"
+        >
+
+            <div class="page-heading">
+
+                <div>
+                    <span class="eyebrow">ISLAMIC FINANCE</span>
+                    <h1>Islamic</h1>
+                    <p>
+                        Insight sederhana untuk membantu mengelola keuangan dengan lebih sadar.
+                    </p>
+                </div>
+
+            </div>
+
+            <article class="islamic-hero">
+
+                <div class="islamic-hero-icon">
+                    <i data-lucide="moon-star"></i>
+                </div>
+
+                <span class="eyebrow">
+                    FINANCIAL REFLECTION
+                </span>
+
+                <h2>
+                    Uang bukan hanya tentang berapa banyak yang kita punya.
+                </h2>
+
+                <p>
+                    Cara kita memperoleh, menggunakan, menyimpan,
+                    dan berbagi uang juga merupakan bagian dari bagaimana
+                    kita mengelola amanah.
+                </p>
+
+            </article>
+
+            <!-- PRINCIPLES -->
+            <section class="section-block">
+
+                <div class="section-heading">
+
+                    <div>
+                        <span class="eyebrow">PRINCIPLES</span>
+                        <h2>Prinsip sederhana</h2>
+                    </div>
+
+                </div>
+
+                <div class="principle-list">
+
+                    <article class="principle-card">
+
+                        <div class="principle-number">01</div>
+
+                        <div>
+                            <h3>Prioritaskan kebutuhan</h3>
+                            <p>
+                                Bedakan kebutuhan utama dengan keinginan
+                                agar pengeluaran tetap terkendali.
+                            </p>
+                        </div>
+
+                    </article>
+
+                    <article class="principle-card">
+
+                        <div class="principle-number">02</div>
+
+                        <div>
+                            <h3>Hindari pemborosan</h3>
+                            <p>
+                                Gunakan uang secara proporsional dan
+                                hindari pengeluaran yang tidak memberikan manfaat.
+                            </p>
+                        </div>
+
+                    </article>
+
+                    <article class="principle-card">
+
+                        <div class="principle-number">03</div>
+
+                        <div>
+                            <h3>Berbagi</h3>
+                            <p>
+                                Sedekah merupakan salah satu bentuk berbagi
+                                yang dapat direncanakan sesuai kemampuan.
+                            </p>
+                        </div>
+
+                    </article>
+
+                    <article class="principle-card">
+
+                        <div class="principle-number">04</div>
+
+                        <div>
+                            <h3>Kelola dengan tanggung jawab</h3>
+                            <p>
+                                Catat pemasukan dan pengeluaran agar kita
+                                mengetahui bagaimana uang digunakan.
+                            </p>
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </section>
+
+            <!-- ZAKAT CALCULATOR -->
+            <section class="section-block">
+
+                <div class="section-heading">
+
+                    <div>
+                        <span class="eyebrow">ZAKAT PENGHASILAN</span>
+                        <h2>Hitung zakat penghasilan</h2>
+                    </div>
+
+                </div>
+
+                <article class="zakat-card">
+
+                    <p class="zakat-intro">
+                        Zakat penghasilan sebesar 2,5% dikenakan pada penghasilan halal
+                        (gaji, honor, jasa) yang telah mencapai nisab.
+                    </p>
+
+                    <label class="form-field">
+                        <span>Gaji / penghasilan per bulan</span>
+                        <input type="text" id="zakatSalary" inputmode="numeric" autocomplete="off" placeholder="0">
+                    </label>
+
+                    <label class="form-field">
+                        <span>Penghasilan lain per bulan (opsional)</span>
+                        <input type="text" id="zakatOther" inputmode="numeric" autocomplete="off" placeholder="0">
+                    </label>
+
+                    <label class="form-field">
+                        <span>Cicilan utang jatuh tempo (opsional)</span>
+                        <input type="text" id="zakatDebt" inputmode="numeric" autocomplete="off" placeholder="0">
+                    </label>
+
+                    <button class="text-button" id="zakatFillButton" type="button">
+                        Ambil dari pemasukan bulan ini
+                        <i data-lucide="arrow-down-left"></i>
+                    </button>
+
+                    <div class="zakat-result" id="zakatResult" aria-live="polite"></div>
+
+                    <p class="zakat-note" id="zakatNote"></p>
+
+                </article>
+
+            </section>
+
+            <!-- ALLOCATION -->
+            <section class="section-block">
+
+                <article class="allocation-card">
+
+                    <span class="eyebrow">
+                        CONTOH PERENCANAAN
+                    </span>
+
+                    <h2>Rencana uangmu</h2>
+
+                    <p>
+                        Persentase di bawah hanyalah contoh perencanaan pribadi,
+                        bukan ketentuan agama.
+                    </p>
+
+                    <div class="allocation-list">
+
+                        <div class="allocation-row">
+                            <span>Kebutuhan</span>
+                            <strong>50–60%</strong>
+                        </div>
+
+                        <div class="allocation-row">
+                            <span>Tabungan / tujuan</span>
+                            <strong>15–25%</strong>
+                        </div>
+
+                        <div class="allocation-row">
+                            <span>Keinginan</span>
+                            <strong>10–20%</strong>
+                        </div>
+
+                        <div class="allocation-row">
+                            <span>Sedekah</span>
+                            <strong>Sesuai kemampuan</strong>
+                        </div>
+
+                    </div>
+
+                    <div class="allocation-note">
+                        <i data-lucide="info"></i>
+
+                        <span>
+                            Zakat memiliki ketentuan tersendiri dan tidak dapat
+                            disamakan dengan persentase sedekah dalam perencanaan pribadi.
+                        </span>
+                    </div>
+
+                </article>
+
+            </section>
+
+        </section>
+
+    </main>
+
+
+
+
+    <!-- =====================================================
+         BOTTOM NAVIGATION
+    ====================================================== -->
+    <nav class="bottom-nav" aria-label="Navigasi utama">
+
+        <button
+            class="nav-item active"
+            data-page="home"
+            aria-current="page"
+        >
+            <i data-lucide="house"></i>
+            <span>Home</span>
+        </button>
+
+        <button
+            class="nav-item"
+            data-page="transactions"
+        >
+            <i data-lucide="receipt-text"></i>
+            <span>Transaksi</span>
+        </button>
+
+        <button
+            class="nav-item nav-add"
+            id="navAddButton"
+            aria-label="Tambah transaksi"
+        >
+            <span class="nav-add-circle">
+                <i data-lucide="plus"></i>
+            </span>
+
+            <span>Tambah</span>
+        </button>
+
+        <button
+            class="nav-item"
+            data-page="analysis"
+        >
+            <i data-lucide="chart-no-axes-combined"></i>
+            <span>Analisis</span>
+        </button>
+
+        <button
+            class="nav-item"
+            data-page="islamic"
+        >
+            <i data-lucide="moon-star"></i>
+            <span>Islamic</span>
+        </button>
+
+    </nav>
+
+
+    <!-- =====================================================
+         TRANSACTION BOTTOM SHEET
+    ====================================================== -->
+    <div
+        class="sheet-overlay"
+        id="transactionSheet"
+    >
+
+        <div class="bottom-sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+
+            <div class="sheet-handle"></div>
+
+            <div class="sheet-header">
+
+                <div>
+                    <span class="eyebrow" id="sheetEyebrow">NEW TRANSACTION</span>
+                    <h2 id="sheetTitle">Catat transaksi</h2>
+                </div>
+
+                <button
+                    class="icon-button"
+                    id="closeTransactionSheet"
+                    aria-label="Tutup"
+                >
+                    <i data-lucide="x"></i>
+                </button>
+
+            </div>
+
+            <!-- TYPE -->
+            <div class="transaction-type">
+
+                <button
+                    class="type-option active"
+                    data-type="expense"
+                >
+                    <i data-lucide="arrow-up-right"></i>
+                    Pengeluaran
+                </button>
+
+                <button
+                    class="type-option"
+                    data-type="income"
+                >
+                    <i data-lucide="arrow-down-left"></i>
+                    Pemasukan
+                </button>
+
+            </div>
+
+            <!-- AMOUNT -->
+            <div class="amount-field">
+
+                <span id="amountCurrency">Rp</span>
+
+                <input
+                    type="text"
+                    id="transactionAmount"
+                    inputmode="numeric"
+                    autocomplete="off"
+                    placeholder="0"
+                >
+
+            </div>
+
+            <!-- FORM -->
+            <div class="form-grid">
+
+                <label class="form-field">
+
+                    <span>Kategori</span>
+
+                    <select id="transactionCategory"></select>
+
+                </label>
+
+                <label class="form-field">
+
+                    <span>Tanggal</span>
+
+                    <input
+                        type="date"
+                        id="transactionDate"
+                    >
+
+                </label>
+
+            </div>
+
+            <label class="form-field">
+
+                <span>Catatan</span>
+
+                <input
+                    type="text"
+                    id="transactionNote"
+                    placeholder="Contoh: makan siang"
+                    maxlength="100"
+                >
+
+            </label>
+
+            <button
+                class="primary-button"
+                id="saveTransaction"
+            >
+                Simpan transaksi
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- SETTINGS SHEET -->
+    <div class="sheet-overlay" id="settingsSheet">
+        <div class="bottom-sheet" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+
+            <div class="sheet-handle"></div>
+
+            <div class="sheet-header">
+                <div>
+                    <span class="eyebrow">SETTINGS</span>
+                    <h2 id="settingsTitle">Pengaturan</h2>
+                </div>
+
+                <button class="icon-button" data-close-sheet="settingsSheet" aria-label="Tutup">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+
+            <label class="form-field">
+                <span>Nama panggilan</span>
+                <input type="text" id="settingsName" maxlength="30" placeholder="Nama kamu" autocomplete="off">
+            </label>
+
+            <label class="form-field">
+                <span>Wilayah &amp; mata uang</span>
+                <select id="settingsRegion">
+                    <option value="ID">Indonesia — Rupiah (Rp)</option>
+                    <option value="MY">Malaysia — Ringgit (RM)</option>
+                </select>
+            </label>
+
+            <button class="secondary-button install-setting" type="button" data-install data-install-wrap hidden>
+                Instal aplikasi (bisa offline)
+            </button>
+
+            <button class="primary-button" id="saveSettings">Simpan</button>
+
+        </div>
+    </div>
+
+    <!-- INSTALL INSTRUCTIONS -->
+    <div class="sheet-overlay" id="installSheet">
+        <div class="bottom-sheet" role="dialog" aria-modal="true" aria-labelledby="installTitle">
+
+            <div class="sheet-handle"></div>
+
+            <div class="sheet-header">
+                <div>
+                    <span class="eyebrow">INSTALL</span>
+                    <h2 id="installTitle">Instal BudgetFlow</h2>
+                </div>
+
+                <button class="icon-button" data-close-sheet="installSheet" aria-label="Tutup">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+
+            <p class="install-intro" id="installIntro"></p>
+
+            <ol class="install-steps" id="installSteps"></ol>
+
+        </div>
+    </div>
+
+    <!-- CONFIRM DIALOG -->
+    <div class="sheet-overlay dialog" id="confirmDialog">
+        <div class="bottom-sheet" role="alertdialog" aria-modal="true" aria-labelledby="confirmTitle" aria-describedby="confirmMessage">
+
+            <h2 id="confirmTitle"></h2>
+            <p id="confirmMessage"></p>
+
+            <div class="confirm-actions">
+                <button class="secondary-button" id="confirmCancel" type="button">Batal</button>
+                <button class="primary-button danger" id="confirmAccept" type="button">Hapus</button>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- =====================================================
+         TOAST
+    ====================================================== -->
+    <div class="toast" id="toast" role="status" aria-live="polite">
+    <div class="toast-icon">
+        <i data-lucide="check"></i>
+    </div>
+
+    <div class="toast-content">
+        <strong id="toastTitle">Berhasil</strong>
+        <span id="toastMessage">Transaksi berhasil disimpan.</span>
+    </div>
+
+    <button class="toast-close" id="closeToast" aria-label="Tutup">
+        <i data-lucide="x"></i>
+    </button>
+
+    <div class="toast-progress"></div>
+</div>
+
+
+    <!-- APP SCRIPT -->
+    <script src="app.js"></script>
+
+</div>
+
+</body>
+</html>
