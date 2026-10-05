@@ -67,52 +67,7 @@ function roundMoney(value) {
 
 }
 
-const CATEGORY_META = {
-    food: {
-        name: "Makanan",
-        icon: "utensils"
-    },
-
-    transport: {
-        name: "Transportasi",
-        icon: "car-front"
-    },
-
-    shopping: {
-        name: "Belanja",
-        icon: "shopping-bag"
-    },
-
-    bills: {
-        name: "Tagihan",
-        icon: "receipt"
-    },
-
-    health: {
-        name: "Kesehatan",
-        icon: "heart-pulse"
-    },
-
-    entertainment: {
-        name: "Hiburan",
-        icon: "gamepad-2"
-    },
-
-    education: {
-        name: "Pendidikan",
-        icon: "book-open"
-    },
-
-    investment: {
-        name: "Investasi",
-        icon: "trending-up"
-    },
-
-    other: {
-        name: "Lainnya",
-        icon: "circle-dot"
-    }
-};
+const CATEGORY_META = { food: { name: "Makanan", icon: "utensils" }, drink: { name: "Minuman", icon: "coffee" }, transport: { name: "Transportasi", icon: "car-front" }, shopping: { name: "Belanja", icon: "shopping-bag" }, bills: { name: "Tagihan", icon: "receipt" }, health: { name: "Kesehatan", icon: "heart-pulse" }, entertainment: { name: "Hiburan", icon: "gamepad-2" }, education: { name: "Pendidikan", icon: "book-open" }, investment: { name: "Investasi", icon: "trending-up" }, other: { name: "Lainnya", icon: "circle-dot" } };
 
 const INCOME_META = {
     salary: { name: "Gaji", icon: "briefcase" },
