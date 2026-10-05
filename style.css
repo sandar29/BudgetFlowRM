@@ -3122,3 +3122,16 @@ a {
 .install-steps li + li {
     margin-top: 10px;
 }
+/* Mencegah double-tap zoom pada elemen interaktif */
+html {
+    touch-action: manipulation;
+    -webkit-text-size-adjust: 100%;
+}
+
+button,
+a,
+input,
+select,
+textarea {
+    touch-action: manipulation;
+}
