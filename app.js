@@ -74,6 +74,7 @@ const INCOME_META = {
     bonus: { name: "Bonus", icon: "gift" },
     business: { name: "Usaha", icon: "store" },
     returns: { name: "Hasil investasi", icon: "trending-up" },
+    endorsement: { name: "Endorsement", icon: "megaphone" },
     other: { name: "Lainnya", icon: "circle-dot" }
 };
 
